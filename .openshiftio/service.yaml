@@ -1,0 +1,112 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: my-database
+    name: my-database
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: influxdb
+      from:
+        kind: DockerImage
+        name: influxdb
+      generation: null
+      importPolicy: {}
+      name: latest
+      referencePolicy:
+        type: ""
+  status:
+    dockerImageRepository: ""
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: database
+    name: database
+  spec:
+    replicas: 1
+    selector:
+      app: database
+      deploymentconfig: database
+    strategy:
+      resources: {}
+    template:
+      metadata:
+        annotations:
+          openshift.io/generated-by: OpenShiftNewApp
+        creationTimestamp: null
+        labels:
+          app: database
+          deploymentconfig: database
+      spec:
+        containers:
+        - env:
+          - name: INFLUXDB_DB
+            value: metric
+          - name: INFLUXDB_ADMIN_PASSWORD
+            value: secret
+          - name: INFLUXDB_ADMIN_USER
+            value: luke
+          image: influxdb
+          name: database
+          ports:
+          - containerPort: 5432
+            protocol: TCP
+          resources: {}
+          volumeMounts:
+          - mountPath: /var/lib/influxdb
+            name: database-volume-1
+        volumes:
+        - emptyDir: {}
+          name: database-volume-1
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - database
+        from:
+          kind: ImageStreamTag
+          name: database:latest
+      type: ImageChange
+  status:
+    availableReplicas: 0
+    latestVersion: 0
+    observedGeneration: 0
+    replicas: 0
+    unavailableReplicas: 0
+    updatedReplicas: 0
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      openshift.io/generated-by: OpenShiftNewApp
+    creationTimestamp: null
+    labels:
+      app: database
+    name: database
+  spec:
+    ports:
+    - name: 8086-tcp
+      port: 8086
+      protocol: TCP
+      targetPort: 8086
+    selector:
+      app: database
+      deploymentconfig: database
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
