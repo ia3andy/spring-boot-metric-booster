@@ -5,35 +5,35 @@ public class DatabaseConfig {
 
     private String url;
 
-    private String userName;
+    private String username;
     private String password;
 
-    private String databaseName;
+    private String database;
 
     public DatabaseConfig() {
     }
 
-    public DatabaseConfig(final String url, final String userName, final String password, final String databaseName) {
+    public DatabaseConfig(final String url, final String username, final String password, final String database) {
         this.url = url;
-        this.userName = userName;
+        this.username = username;
         this.password = password;
-        this.databaseName = databaseName;
+        this.database = database;
     }
 
     public String getUrl() {
         return url;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public String getDatabaseName() {
-        return databaseName;
+    public String getDatabase() {
+        return database;
     }
 
     public DatabaseConfig setUrl(final String url) {
@@ -41,8 +41,8 @@ public class DatabaseConfig {
         return this;
     }
 
-    public DatabaseConfig setUserName(final String userName) {
-        this.userName = userName;
+    public DatabaseConfig setUsername(final String username) {
+        this.username = username;
         return this;
     }
 
@@ -51,8 +51,8 @@ public class DatabaseConfig {
         return this;
     }
 
-    public DatabaseConfig setDatabaseName(final String databaseName) {
-        this.databaseName = databaseName;
+    public DatabaseConfig setDatabase(final String database) {
+        this.database = database;
         return this;
     }
 }

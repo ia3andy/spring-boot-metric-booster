@@ -89,7 +89,8 @@ class SerieList extends React.Component {
                 `[${this.state.serie.map(e => `${e.time}:${e.value}`).join(', ')}]`
             );
         }
-        return h('div', null, h('h1', null, 'Series:'),
+        return h('div', null,
+            h('h1', null, 'Series:'),
             serieListEl,
             serieEl,
             h(SerieForm, { serie: this.state.selected, onSubmit: this.onAddValue })

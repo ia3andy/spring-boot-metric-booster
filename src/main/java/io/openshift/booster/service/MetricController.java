@@ -62,8 +62,8 @@ public class MetricController {
 
 
     MetricController(final DatabaseConfig databaseConfig) {
-        this.influxDB = InfluxDBFactory.connect(databaseConfig.getUrl(), databaseConfig.getUserName(), databaseConfig.getPassword());
-        this.databaseName = databaseConfig.getDatabaseName();
+        this.influxDB = InfluxDBFactory.connect(databaseConfig.getUrl(), databaseConfig.getUsername(), databaseConfig.getPassword());
+        this.databaseName = databaseConfig.getDatabase();
         initializeDatabaseIfNotExists();
     }
 
