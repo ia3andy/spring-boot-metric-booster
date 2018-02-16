@@ -4,7 +4,7 @@ node("launchpad-maven") {
     sh "mvn test"
   }
   stage("Deploy database") {
-    sh "if ! oc get service my-database | grep my-database; then oc new-app -e POSTGRESQL_USER=luke -ePOSTGRESQL_PASSWORD=secret -ePOSTGRESQL_DATABASE=my_data openshift/postgresql-92-centos7 --name=my-database; fi"
+    sh "if ! oc get service database | grep database; then oc new-app -eINFLUXDB_ADMIN_USER=luke -eINFLUXDB_ADMIN_PASSWORD=secret -eINFLUXDB_DB=metric influxdb --name=database; fi"
   }
   stage("Deploy") {
     sh "mvn fabric8:deploy -Popenshift -DskipTests"
